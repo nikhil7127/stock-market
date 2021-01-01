@@ -28,7 +28,7 @@ class Stock_info():
         self.driver.find_element_by_class_name("js-apply-button").click()
         t.sleep(2)
 
-    def get_table(self,save=False,save_as="ITC.csv"):
+    def get_table(self,save=False,save_as="ITC_stock.csv"):
         HEADERS = ({'User-Agent': 'Nikhil\'s_request'})
         response = requests.get(self.driver.current_url, headers=HEADERS)
         soup = BeautifulSoup(response.text,"lxml")
@@ -45,5 +45,5 @@ class Stock_info():
         else:
             return frame
 
-a = Stock_info(from_date="12/12/2019",to_date="12/12/2020")
+a = Stock_info(from_date="12/30/2019",to_date="12/30/2020")
 a.get_table(save=True)
