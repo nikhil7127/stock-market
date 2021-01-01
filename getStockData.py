@@ -28,7 +28,7 @@ class Stock_info():
         self.driver.find_element_by_class_name("js-apply-button").click()
         t.sleep(2)
 
-    def get_table(self,save_as="ITC.csv"):
+    def get_table(self,save=False,save_as="ITC.csv"):
         HEADERS = ({'User-Agent': 'Nikhil\'s_request'})
         response = requests.get(self.driver.current_url, headers=HEADERS)
         soup = BeautifulSoup(response.text,"lxml")
@@ -40,8 +40,10 @@ class Stock_info():
         frame["Low"] = [k.text.strip() for k in soup.find_all("td",attrs={"class":"col-last_min"})]
         frame["Volume"] = [k.text.strip() for ind,k in enumerate(soup.find_all("td",attrs={"class":"col-volume"})) if ind<len(frame["Low"])]
         frame["% Change"] = [k.text.strip() for k in soup.find_all("td",attrs={"class":"col-change_percent"})]
-
-        frame.to_csv(save_as)
+        if save:
+            frame.to_csv(save_as,index=False)
+        else:
+            return frame
 
 a = Stock_info(from_date="12/12/2019",to_date="12/12/2020")
 a.get_table()
