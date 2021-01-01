@@ -46,4 +46,4 @@ class Stock_info():
             return frame
 
 a = Stock_info(from_date="12/12/2019",to_date="12/12/2020")
-a.get_table()
+a.get_table(save=True)
