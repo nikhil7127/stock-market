@@ -3,7 +3,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score
 import matplotlib.pyplot as plt
 
-def supportVectorRegression(x_train,y_train,x_test,y_test):
+def supportVectorRegression(x_train,y_train,x_test,y_test,total):
     svr = SVR()
     x_stand = StandardScaler()
     y_stand = StandardScaler()
@@ -18,4 +18,4 @@ def supportVectorRegression(x_train,y_train,x_test,y_test):
     plt.scatter(x_stand.inverse_transform(xTest),y_stand.inverse_transform(yTest),color="blue")
     plt.scatter(x_stand.inverse_transform(xTest),y_stand.inverse_transform(pred),color="yellow")
     plt.savefig("images/svr.png")
-    return r2_score(y_test,y_stand.inverse_transform(pred))*100
+    return [r2_score(y_test,y_stand.inverse_transform(pred))*100,y_stand.inverse_transform(svr.predict(x_stand.fit_transform([[total]])))]
