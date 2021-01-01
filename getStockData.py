@@ -40,6 +40,7 @@ class Stock_info():
         frame["Low"] = [k.text.strip() for k in soup.find_all("td",attrs={"class":"col-last_min"})]
         frame["Volume"] = [k.text.strip() for ind,k in enumerate(soup.find_all("td",attrs={"class":"col-volume"})) if ind<len(frame["Low"])]
         frame["% Change"] = [k.text.strip() for k in soup.find_all("td",attrs={"class":"col-change_percent"})]
+        frame = frame.iloc[::-1]
         if save:
             frame.to_csv(save_as,index=False)
         else:
