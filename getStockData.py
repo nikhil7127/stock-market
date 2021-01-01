@@ -3,11 +3,12 @@ from bs4 import BeautifulSoup
 import time as t
 import pandas as p
 from selenium import webdriver
+import datetime as d
 from selenium.webdriver.common.keys import Keys
 
 class Stock_info():
 
-    def __init__(self,from_date="11/12/2020",to_date="12/14/2020"):
+    def __init__(self,from_date="11/12/2020",to_date=None):
         self.driver = webdriver.Chrome(executable_path="c:/selenium_python/chromedriver.exe")
         self.driver.maximize_window()
         self.driver.get("https://in.investing.com/equities/itc-historical-data")
@@ -20,11 +21,12 @@ class Stock_info():
         t.sleep(2)
         fromDate.send_keys(from_date)
         t.sleep(2)
-        toDate = self.driver.find_element_by_class_name("js-date-to")
-        toDate.send_keys(Keys.CONTROL+"a",Keys.DELETE)
-        t.sleep(2)
-        toDate.send_keys(to_date)
-        t.sleep(2)
+        if to_date:
+            toDate = self.driver.find_element_by_class_name("js-date-to")
+            toDate.send_keys(Keys.CONTROL+"a",Keys.DELETE)
+            t.sleep(2)
+            toDate.send_keys(to_date)
+            t.sleep(2)
         self.driver.find_element_by_class_name("js-apply-button").click()
         t.sleep(2)
 
@@ -46,5 +48,6 @@ class Stock_info():
         else:
             return frame
 
-a = Stock_info(from_date="12/30/2019",to_date="12/30/2020")
-a.get_table(save=True)
+if __name__ == "__main__":
+    a = Stock_info(from_date="12/30/2019")
+    a.get_table()
